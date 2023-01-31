@@ -39,6 +39,11 @@
 </template>
 <script lang="ts" setup>
 import { Ref, ref } from "vue";
+import { useUserStore } from "@/store/user";
+import { useGeneralStore } from "@/store/general";
+
+const userStore = useUserStore();
+const generalStore = useGeneralStore();
 
 const name: Ref<string> = ref("");
 const numCard: Ref<string> = ref("");
@@ -47,7 +52,28 @@ const yy: Ref<string> = ref("");
 const cvc: Ref<string> = ref("");
 
 function enviar() {
-  console.log("enviou");
+  if (checkCamp()) {
+    return generalStore.setMessageSnackbar("preencha todos os campos");
+  }
+
+  userStore.name = name.value.toUpperCase();
+  userStore.numCard = numCard.value;
+  userStore.mm = mm.value;
+  userStore.yy = yy.value;
+  userStore.cvc = cvc.value;
+  generalStore.loading = true;
+  setTimeout(() => {
+    generalStore.loading = false;
+    generalStore.setMessageSnackbar("Cadastro finalizado");
+  }, 2000);
+}
+
+function checkCamp() {
+  if (!name.value || !numCard.value || !mm.value || !yy.value || !cvc.value) {
+    return true;
+  } else {
+    return false;
+  }
 }
 </script>
 

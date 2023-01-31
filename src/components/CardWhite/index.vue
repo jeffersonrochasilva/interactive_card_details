@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card__leitor"></div>
     <div class="card__cod">
-      <p class="card__cod__num">000</p>
+      <p class="card__cod__num">{{ cvc }}</p>
     </div>
     <div class="card__description">
       <div class="card__description__line"></div>
@@ -11,6 +11,13 @@
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { useUserStore } from "@/store/user";
+import { computed, ComputedRef } from "vue";
+const userStore = useUserStore();
+const cvc: ComputedRef<string> = computed(() => userStore.cvc);
+</script>
 
 <style lang="scss" scoped>
 .card {

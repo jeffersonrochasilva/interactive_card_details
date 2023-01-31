@@ -5,14 +5,38 @@
       <div class="card__user__circle"></div>
     </div>
     <div class="card__num">
-      <span class="card__num__title">0000 0000 0000 0000</span>
+      <span class="card__num__title">{{ setString(num) }}</span>
     </div>
     <div class="card__name">
-      <p class="card__name__text">JANE APPLESEED</p>
-      <p class="card__name__text">00/00</p>
+      <p class="card__name__text">{{ name }}</p>
+      <p class="card__name__text">{{ formatData(mm) }}</p>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { computed, ComputedRef } from "vue";
+import { useUserStore } from "@/store/user";
+const userStore = useUserStore();
+const num: ComputedRef<string> = computed(() => userStore.numCard);
+const name: ComputedRef<string> = computed(() => userStore.name);
+const mm: ComputedRef<string> = computed(() => userStore.mm);
+
+const setString = (item: string) => {
+  let res = item.split("");
+  res.splice(4, 0, " ");
+  res.splice(9, 0, " ");
+  res.splice(14, 0, " ");
+  console.log("res", res.join(""));
+  return res.join("");
+};
+
+const formatData = (item: string) => {
+  let res = item.split("");
+  res.splice(2, 0, "/");
+  return res.join("");
+};
+</script>
 
 <style lang="scss" scoped>
 .card {
@@ -36,7 +60,7 @@
       height: 30px;
       border-radius: 50%;
       background: transparent;
-      border: 1px solid gray;
+      border: 1px solid #fff;
     }
   }
   &__num {
