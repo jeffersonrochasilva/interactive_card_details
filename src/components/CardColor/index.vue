@@ -9,7 +9,7 @@
     </div>
     <div class="card__name">
       <p class="card__name__text">{{ name }}</p>
-      <p class="card__name__text">{{ formatData(mm) }}</p>
+      <p class="card__name__text">{{ mm }}/{{ yy }}</p>
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ const userStore = useUserStore();
 const num: ComputedRef<string> = computed(() => userStore.numCard);
 const name: ComputedRef<string> = computed(() => userStore.name);
 const mm: ComputedRef<string> = computed(() => userStore.mm);
+const yy: ComputedRef<string> = computed(() => userStore.yy);
 
 const setString = (item: string) => {
   let res = item.split("");
@@ -28,12 +29,6 @@ const setString = (item: string) => {
   res.splice(9, 0, " ");
   res.splice(14, 0, " ");
   console.log("res", res.join(""));
-  return res.join("");
-};
-
-const formatData = (item: string) => {
-  let res = item.split("");
-  res.splice(2, 0, "/");
   return res.join("");
 };
 </script>

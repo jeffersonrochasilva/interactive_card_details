@@ -3,9 +3,11 @@
     <div>
       <p class="form__title">CARDHOLDER NAME</p>
       <input
+        type="text"
         class="form__camp"
         v-model="name"
         placeholder="e.g Jane Appleseed"
+        maxlength="43"
       />
     </div>
     <div>
@@ -14,23 +16,36 @@
         class="form__camp"
         v-model="numCard"
         placeholder="e.g 1234 5678 9123 0000"
+        maxlength="16"
       />
     </div>
     <div class="form__boxContent">
       <div>
         <p class="form__boxContent__title">EXP. DATA</p>
-        <input class="form__boxContent__camp" v-model="mm" placeholder="MM" />
+        <input
+          class="form__boxContent__camp"
+          v-model="mm"
+          placeholder="MM"
+          maxlength="2"
+        />
       </div>
       <div>
         <p class="form__boxContent__title">(MM/YY)</p>
-        <input class="form__boxContent__camp" v-model="yy" placeholder="YY" />
+        <input
+          class="form__boxContent__camp"
+          v-model="yy"
+          placeholder="YY"
+          maxlength="2"
+        />
       </div>
       <div>
         <p class="form__boxContent__title">CVC</p>
         <input
+          type="text"
           class="form__boxContent__campAltern"
           v-model="cvc"
           placeholder="e.g 123"
+          maxlength="3"
         />
       </div>
     </div>
@@ -56,14 +71,14 @@ function enviar() {
     return generalStore.setMessageSnackbar("preencha todos os campos");
   }
 
-  userStore.name = name.value.toUpperCase();
-  userStore.numCard = numCard.value;
-  userStore.mm = mm.value;
-  userStore.yy = yy.value;
-  userStore.cvc = cvc.value;
   generalStore.loading = true;
   setTimeout(() => {
     generalStore.loading = false;
+    userStore.name = name.value.toUpperCase();
+    userStore.numCard = numCard.value;
+    userStore.mm = mm.value;
+    userStore.yy = yy.value;
+    userStore.cvc = cvc.value;
     generalStore.setMessageSnackbar("Cadastro finalizado");
   }, 2000);
 }
@@ -75,6 +90,14 @@ function checkCamp() {
     return false;
   }
 }
+const limitedCaracteres = (item: string) => {
+  if (item.length === 2) {
+    const res = item;
+    return res;
+  } else {
+    return item;
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -85,6 +108,11 @@ function checkCamp() {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
   &__title {
     font-family: sans-serif;
