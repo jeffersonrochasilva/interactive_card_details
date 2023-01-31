@@ -1,5 +1,5 @@
 <template>
-  <v-form class="form">
+  <v-form @submit.prevent="enviar" class="form">
     <div>
       <p class="form__title">CARDHOLDER NAME</p>
       <input
@@ -34,7 +34,7 @@
         />
       </div>
     </div>
-    <v-btn flat class="form__btn">confirm</v-btn>
+    <v-btn type="submit" class="form__btn">confirm</v-btn>
   </v-form>
 </template>
 <script lang="ts" setup>
@@ -45,16 +45,21 @@ const numCard: Ref<string> = ref("");
 const mm: Ref<string> = ref("");
 const yy: Ref<string> = ref("");
 const cvc: Ref<string> = ref("");
+
+function enviar() {
+  console.log("enviou");
+}
 </script>
 
 <style lang="scss" scoped>
 .form {
-  width: 25%;
+  width: 440px;
   height: 400px;
   padding: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   &__title {
     font-family: sans-serif;
     font-weight: bold;
